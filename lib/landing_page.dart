@@ -24,18 +24,22 @@ class _LandingPageState extends State<LandingPage> {
           mainAxisAlignment: MainAxisAlignment.spaceAround,
           children: [
             Container(
-              width: 150,
+              width: 160,
               height: 40,
               margin: const EdgeInsets.only(top: 25.0),
               decoration: BoxDecoration(
                 color: Colors.yellow.shade100,
-                borderRadius: BorderRadius.circular(15.0),
+                borderRadius: BorderRadius.circular(20.0),
+                border: Border.all(
+                  color: Colors.white,
+                  width: 2.0,
+                ),
               ),
               child: const Center(
                 child: Text(
-                  'WELCOME!',
+                  'Welcome!',
                   style: TextStyle(
-                    fontSize: 24, // Text size
+                    fontSize: 20, // Text size
                     color: Color.fromARGB(255, 75, 47, 35), // Text color
                     fontWeight: FontWeight.bold,
                     fontFamily: 'RobotoMono-Bold', // Text style
@@ -45,16 +49,8 @@ class _LandingPageState extends State<LandingPage> {
             ),
             const SizedBox(height: 10),
             SizedBox(
-              width: 180.0, // Adjust the size as needed
-              height: 180.0, // Adjust the size as needed
-              // decoration: BoxDecoration(
-              //   shape: BoxShape.circle,
-              //   border: Border.all(
-              //     color:
-              //         const Color.fromARGB(255, 56, 35, 25), // Add border color
-              //     width: 5.0, // Add border width
-              //   ),
-              // ),
+              width: 180.0,
+              height: 180.0,
               child: ClipOval(
                 child: Image.asset(
                   'assets/images/app-logo.png', // Replace with your image URL
@@ -64,20 +60,14 @@ class _LandingPageState extends State<LandingPage> {
             ),
             const SizedBox(
               width: 215.0,
-              height: 165.0,
-              // decoration: BoxDecoration(
-              //   border: Border.all(
-              //     color: Colors.black, // Border color
-              //     width: 2.0, // Border width
-              //   ),
-              // ),
+              height: 150.0,
               child: Center(
                 child: Text(
-                  "Welcome to our free OCR application! Transform handwritten text from images into a digital format effortlessly. Edit, format, and manage your text with precision. Let's get started on this efficient journey!",
+                  "Welcome to our free OCR application! Transform handwritten text from images into a digital format effortlessly. Let's get started on this efficient journey!",
                   textAlign: TextAlign.center,
                   style: TextStyle(
                     color: Color.fromRGBO(255, 249, 196, 0.767),
-                    fontSize: 18,
+                    fontSize: 14,
                     fontWeight: FontWeight.normal,
                     fontFamily: 'StyleScript',
                   ),
@@ -86,10 +76,9 @@ class _LandingPageState extends State<LandingPage> {
             ),
             ElevatedButton(
               style: ElevatedButton.styleFrom(
-                  minimumSize: const Size(110.0, 35.0),
+                  minimumSize: const Size(150.0, 40.0),
                   shape: RoundedRectangleBorder(
-                    borderRadius: BorderRadius.circular(
-                        30.0), // Adjust the radius as needed
+                    borderRadius: BorderRadius.circular(30.0),
                   ),
                   side: BorderSide(
                     color: Colors.yellow.shade100, // Border color
