@@ -25,9 +25,12 @@ class _ComparisonPageState extends State<ComparisonPage> {
       body: Container(
         height: double.infinity,
         width: double.infinity,
-        margin: EdgeInsets.all(20.0),
+        // margin: EdgeInsets.all(20.0),
+        decoration: BoxDecoration(
+          color: Color.fromARGB(255, 241, 241, 241),
+        ),
         child: Column(
-          mainAxisAlignment: MainAxisAlignment.spaceAround,
+          mainAxisAlignment: MainAxisAlignment.spaceEvenly,
           children: [
             Container(
               constraints: BoxConstraints(

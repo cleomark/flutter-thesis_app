@@ -6,6 +6,7 @@ import 'package:provider/provider.dart';
 // import 'dart:io';
 import 'image_provider.dart' as CustomImageProvider;
 import 'digitizeText_page.dart';
+import 'howItWorks_page.dart';
 
 class UploadPage extends StatefulWidget {
   const UploadPage({super.key});
@@ -342,9 +343,16 @@ class _UploadPageState extends State<UploadPage> {
             Positioned(
               right: 0,
               left: 0,
-              bottom: 10,
+              bottom: 12,
               child: GestureDetector(
-                onTap: () {},
+                onTap: () {
+                  Navigator.push(
+                    context,
+                    MaterialPageRoute(
+                      builder: (context) => const HowItWorksPage(),
+                    ),
+                  );
+                },
                 child: Text(
                   textAlign: TextAlign.center,
                   'How it works?',
