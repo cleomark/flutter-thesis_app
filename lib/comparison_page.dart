@@ -1,4 +1,7 @@
 import 'package:flutter/material.dart';
+import 'dart:typed_data';
+import 'package:provider/provider.dart';
+import 'image_provider.dart' as CustomImageProvider;
 
 class ComparisonPage extends StatefulWidget {
   const ComparisonPage({super.key});
@@ -10,6 +13,9 @@ class ComparisonPage extends StatefulWidget {
 class _ComparisonPageState extends State<ComparisonPage> {
   @override
   Widget build(BuildContext context) {
+    final imageProvider =
+        Provider.of<CustomImageProvider.ImageProvider>(context);
+    final Uint8List? croppedImage = imageProvider.croppedImage;
     return Scaffold(
       appBar: AppBar(
         title: Text('Image vs Text'),
@@ -24,27 +30,57 @@ class _ComparisonPageState extends State<ComparisonPage> {
           mainAxisAlignment: MainAxisAlignment.spaceAround,
           children: [
             Container(
-              width: 350, // Set the width as per your requirements
-              height: 285, // Set the height as per your requirements
-              decoration: BoxDecoration(
-                color: Colors.white, // White background
-                border: Border.all(
-                  color: const Color(0xff432818), // Brown border color
-                  width: 2.0, // Border width
-                ),
-                borderRadius: BorderRadius.circular(10), // Border radius
+              constraints: BoxConstraints(
+                minWidth: 0,
+                maxWidth: 350,
               ),
+              height: 285,
+              padding: EdgeInsets.all(8.0),
+              decoration: BoxDecoration(
+                color: Colors.grey,
+                border: Border.all(
+                  color: Colors.black,
+                  width: 1.0,
+                ),
+                borderRadius: BorderRadius.circular(10),
+                boxShadow: [
+                  BoxShadow(
+                    color: Colors.grey.withOpacity(0.5),
+                    spreadRadius: 2,
+                    blurRadius: 5,
+                    offset: Offset(0, 3),
+                  ),
+                ],
+              ),
+              child: croppedImage != null
+                  ? Image.memory(croppedImage)
+                  : Center(child: Text('No image to show')),
             ),
             Container(
-              width: 350, // Set the width as per your requirements
-              height: 285, // Set the height as per your requirements
+              width: 350,
+              height: 285,
+              padding: EdgeInsets.all(8.0),
               decoration: BoxDecoration(
-                color: Colors.white, // White background
+                color: Colors.white,
                 border: Border.all(
-                  color: const Color(0xff432818), // Brown border color
-                  width: 2.0, // Border width
+                  color: const Color(0xff432818),
+                  width: 2.0,
                 ),
-                borderRadius: BorderRadius.circular(10), // Border radius
+                borderRadius: BorderRadius.circular(10),
+                boxShadow: [
+                  BoxShadow(
+                    color: Colors.grey.withOpacity(0.5),
+                    spreadRadius: 2,
+                    blurRadius: 5,
+                    offset: Offset(0, 3),
+                  ),
+                ],
+              ),
+              child: Center(
+                child: Text(
+                  'Translated Text Placeholder',
+                  style: TextStyle(color: Colors.black54),
+                ),
               ),
             ),
           ],

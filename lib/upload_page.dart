@@ -1,7 +1,10 @@
 import 'package:flutter/material.dart';
+import 'dart:typed_data';
 import 'package:image_picker/image_picker.dart';
 import 'package:image_cropper/image_cropper.dart';
+import 'package:provider/provider.dart';
 // import 'dart:io';
+import 'image_provider.dart' as CustomImageProvider;
 import 'digitizeText_page.dart';
 
 class UploadPage extends StatefulWidget {
@@ -93,6 +96,13 @@ class _UploadPageState extends State<UploadPage> {
     );
 
     if (croppedImage != null) {
+      Future<Uint8List> bytes = croppedImage.readAsBytes();
+
+      await bytes.then((Uint8List bytes) {
+        Provider.of<CustomImageProvider.ImageProvider>(context, listen: false)
+            .updateCroppedImage(bytes);
+      });
+
       // Now you can use the cropped image for further processing or display.
       // For example, you can display the image in an Image widget.
       // Update your UI accordingly.

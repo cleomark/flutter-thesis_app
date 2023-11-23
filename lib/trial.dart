@@ -1,7 +1,9 @@
 // import 'package:flutter/material.dart';
 // import 'package:image_picker/image_picker.dart';
 // import 'package:image_cropper/image_cropper.dart';
+// import 'package:provider/provider.dart';
 // // import 'dart:io';
+// import 'image_provider.dart' as CustomImageProvider;
 // import 'digitizeText_page.dart';
 
 // class UploadPage extends StatefulWidget {
@@ -17,9 +19,25 @@
 //         await ImagePicker().pickImage(source: ImageSource.camera);
 
 //     if (image != null) {
-//       _cropImage(XFile(image.path));
-//       // You can now use the captured image (XFile) for further processing or display.
-//       // For example, you can display the image in an Image widget.
+//       // Show a loading indicator while cropping
+//       showDialog(
+//         context: context,
+//         barrierDismissible: false,
+//         builder: (BuildContext context) {
+//           return Center(
+//             child: CircularProgressIndicator(
+//               valueColor: AlwaysStoppedAnimation<Color>(
+//                 const Color(0xffffe6a7),
+//               ),
+//             ),
+//           );
+//         },
+//       );
+
+//       await _cropImage(XFile(image.path));
+
+//       // Close the loading indicator
+//       Navigator.pop(context);
 //     }
 //   }
 
@@ -28,9 +46,25 @@
 //         await ImagePicker().pickImage(source: ImageSource.gallery);
 
 //     if (image != null) {
-//       _cropImage(XFile(image.path));
-//       // You can now use the selected image (XFile) for further processing or display.
-//       // For example, you can display the image in an Image widget.
+//       // Show a loading indicator while cropping
+//       showDialog(
+//         context: context,
+//         barrierDismissible: false,
+//         builder: (BuildContext context) {
+//           return Center(
+//             child: CircularProgressIndicator(
+//               valueColor: AlwaysStoppedAnimation<Color>(
+//                 const Color(0xffffe6a7),
+//               ),
+//             ),
+//           );
+//         },
+//       );
+
+//       await _cropImage(XFile(image.path));
+
+//       // Close the loading indicator
+//       Navigator.pop(context);
 //     }
 //   }
 
@@ -47,8 +81,10 @@
 //       uiSettings: [
 //         AndroidUiSettings(
 //           toolbarTitle: 'Crop Image',
-//           toolbarColor: Colors.deepOrange,
+//           toolbarColor: const Color(0xff432818),
 //           toolbarWidgetColor: Colors.white,
+//           backgroundColor: Colors.grey,
+//           activeControlsWidgetColor: Color.fromARGB(255, 117, 68, 40),
 //           initAspectRatio: CropAspectRatioPreset.original,
 //           lockAspectRatio: false,
 //         ),
@@ -59,6 +95,8 @@
 //     );
 
 //     if (croppedImage != null) {
+//       Provider.of<CustomImageProvider.ImageProvider>(context, listen: false)
+//           .updateCroppedImage(croppedImage);
 //       // Now you can use the cropped image for further processing or display.
 //       // For example, you can display the image in an Image widget.
 //       // Update your UI accordingly.
@@ -103,7 +141,7 @@
 //                     ),
 //                     child: ElevatedButton(
 //                       style: ElevatedButton.styleFrom(
-//                         minimumSize: const Size(110.0, 55.0),
+//                         minimumSize: const Size(0.0, 55.0),
 //                         shape: RoundedRectangleBorder(
 //                           borderRadius: BorderRadius.circular(30.0),
 //                         ),
@@ -114,8 +152,14 @@
 //                         foregroundColor: const Color(0xff432818),
 //                         backgroundColor: const Color(0xffffe6a7),
 //                       ),
-//                       onPressed: () {
-//                         _captureImage();
+//                       onPressed: () async {
+//                         await _captureImage(); // Wait for image capture to complete
+//                         Navigator.of(context).push(
+//                           MaterialPageRoute(
+//                             builder: (BuildContext context) =>
+//                                 const DigitizeTextPage(),
+//                           ),
+//                         );
 //                       },
 //                       child: Row(
 //                         mainAxisAlignment: MainAxisAlignment.center,
@@ -130,7 +174,7 @@
 //                           Text(
 //                             "Use Camera",
 //                             style: TextStyle(
-//                               fontSize: 18,
+//                               fontSize: 14,
 //                               fontFamily: 'RobotoMono-Bold',
 //                               fontWeight: FontWeight.w700,
 //                             ),
