@@ -16,7 +16,7 @@ class UploadPage extends StatefulWidget {
 }
 
 class _UploadPageState extends State<UploadPage> {
-  Future<void> _captureImage() async {
+  Future<bool> _captureImage() async {
     final XFile? image =
         await ImagePicker().pickImage(source: ImageSource.camera);
 
@@ -40,10 +40,13 @@ class _UploadPageState extends State<UploadPage> {
 
       // Close the loading indicator
       Navigator.pop(context);
+
+      return true; // Image captured successfully
     }
+    return false; // No image captured
   }
 
-  Future<void> _pickImageFromGallery() async {
+  Future<bool> _pickImageFromGallery() async {
     final XFile? image =
         await ImagePicker().pickImage(source: ImageSource.gallery);
 
@@ -67,7 +70,10 @@ class _UploadPageState extends State<UploadPage> {
 
       // Close the loading indicator
       Navigator.pop(context);
+
+      return true;
     }
+    return false;
   }
 
   Future<void> _cropImage(XFile imageFile) async {
@@ -207,13 +213,15 @@ class _UploadPageState extends State<UploadPage> {
                         backgroundColor: const Color(0xffffe6a7),
                       ),
                       onPressed: () async {
-                        await _captureImage(); // Wait for image capture to complete
-                        Navigator.of(context).push(
-                          MaterialPageRoute(
-                            builder: (BuildContext context) =>
-                                const DigitizeTextPage(),
-                          ),
-                        );
+                        bool imageCaptured = await _captureImage();
+                        if (imageCaptured) {
+                          Navigator.of(context).push(
+                            MaterialPageRoute(
+                              builder: (BuildContext context) =>
+                                  const DigitizeTextPage(),
+                            ),
+                          );
+                        }
                       },
                       child: Row(
                         mainAxisAlignment: MainAxisAlignment.center,
@@ -307,13 +315,15 @@ class _UploadPageState extends State<UploadPage> {
                         backgroundColor: const Color(0xff432818),
                       ),
                       onPressed: () async {
-                        await _pickImageFromGallery(); // Wait for image picking to complete
-                        Navigator.of(context).push(
-                          MaterialPageRoute(
-                            builder: (BuildContext context) =>
-                                const DigitizeTextPage(),
-                          ),
-                        );
+                        bool imageCaptured = await _pickImageFromGallery();
+                        if (imageCaptured) {
+                          Navigator.of(context).push(
+                            MaterialPageRoute(
+                              builder: (BuildContext context) =>
+                                  const DigitizeTextPage(),
+                            ),
+                          );
+                        }
                       },
                       child: Row(
                         mainAxisAlignment: MainAxisAlignment.center,

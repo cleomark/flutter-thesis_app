@@ -3,9 +3,6 @@ import 'package:provider/provider.dart';
 import 'package:thesis_app/image_provider.dart' as CustomImageProvider;
 import 'landing_page.dart';
 
-// void main() {
-//   runApp(const MyApp());
-// }
 void main() {
   runApp(
     ChangeNotifierProvider(

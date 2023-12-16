@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'comparison_page.dart';
 
 class DigitizeTextPage extends StatefulWidget {
-  const DigitizeTextPage({super.key});
+  const DigitizeTextPage({Key? key}) : super(key: key);
 
   @override
   State<DigitizeTextPage> createState() => _DigitizeTextPageState();
@@ -20,93 +20,100 @@ class _DigitizeTextPageState extends State<DigitizeTextPage> {
       body: Container(
         height: double.infinity,
         width: double.infinity,
-        // margin: new EdgeInsets.symmetric(vertical: 35.0),
         decoration: BoxDecoration(
-          color: Color.fromARGB(255, 241, 241, 241),
+          color: const Color.fromARGB(255, 241, 241, 241),
         ),
         child: Stack(
           children: [
             Positioned(
-              top: 35.0,
-              left: 35.0,
-              right: 35.0,
+              top: 20.0,
+              left: 20.0,
+              right: 20.0,
               child: Container(
-                width: 0, // Set the width as per your requirements
-                height: 560, // Set the height as per your requirements
+                height: MediaQuery.of(context).size.height * 0.7,
                 decoration: BoxDecoration(
-                  color: Colors.white, // White background
+                  color: Colors.white,
                   border: Border.all(
-                    color: const Color(0xff432818), // Brown border color
-                    width: 2.0, // Border width
+                    color: const Color(0xff432818),
+                    width: 2.0,
                   ),
-                  borderRadius: BorderRadius.circular(10), // Border radius
+                  borderRadius: BorderRadius.circular(10),
+                ),
+                child: Padding(
+                  padding: EdgeInsets.all(16.0),
+                  child: Text(
+                    "Converted Text from the Model...",
+                  ),
                 ),
               ),
             ),
             Positioned(
-              bottom: 40.0,
-              left: 0.0,
-              right: 0.0,
-              child: Column(
-                mainAxisAlignment: MainAxisAlignment.center,
-                children: [
-                  ElevatedButton(
-                    style: ElevatedButton.styleFrom(
-                      minimumSize: const Size(180.0, 60.0),
-                      shape: RoundedRectangleBorder(
-                        borderRadius: BorderRadius.circular(30.0),
+              bottom: MediaQuery.of(context).size.height * 0.123,
+              left: 0,
+              right: 0,
+              child: FractionallySizedBox(
+                widthFactor: 0.5,
+                child: ElevatedButton(
+                  onPressed: () {
+                    Navigator.of(context).push(
+                      MaterialPageRoute(
+                        builder: (BuildContext context) =>
+                            const ComparisonPage(),
                       ),
-                      side: BorderSide(
-                        color: Colors.white,
-                        width: 3.0,
-                      ),
-                      foregroundColor: const Color(0xff432818),
-                      backgroundColor: const Color(0xffffe6a7),
+                    );
+                  },
+                  style: ElevatedButton.styleFrom(
+                    minimumSize: const Size(0.0, 60.0),
+                    shape: RoundedRectangleBorder(
+                      borderRadius: BorderRadius.circular(30.0),
                     ),
-                    onPressed: () {
-                      Navigator.of(context).push(
-                        MaterialPageRoute(
-                          builder: (BuildContext context) =>
-                              const ComparisonPage(),
-                        ),
-                      );
-                    },
-                    child: Text(
-                      'COMPARE',
-                      style: TextStyle(
-                        fontSize: 20,
-                        fontWeight: FontWeight.w600,
-                        fontFamily: 'RobotoMono-Bold',
-                      ),
+                    side: const BorderSide(
+                      color: Colors.white,
+                      width: 3.0,
+                    ),
+                    foregroundColor: const Color(0xff432818),
+                    backgroundColor: const Color(0xffffe6a7),
+                  ),
+                  child: const Text(
+                    'COMPARE',
+                    style: TextStyle(
+                      fontSize: 20,
+                      fontWeight: FontWeight.w600,
+                      fontFamily: 'RobotoMono-Bold',
                     ),
                   ),
-                  SizedBox(height: 30),
-                  ElevatedButton(
-                    style: ElevatedButton.styleFrom(
-                      minimumSize: const Size(0.0, 40.0),
-                      shape: RoundedRectangleBorder(
-                        borderRadius: BorderRadius.circular(7.0),
-                      ),
-                      side: BorderSide(
-                        color: Colors.white,
-                        width: 3.0,
-                      ),
-                      foregroundColor: Colors.white,
-                      backgroundColor: const Color(0xff432818),
-                    ),
-                    onPressed: () {
-                      Navigator.of(context).pop();
-                    },
-                    child: Text(
-                      'Choose or take a new photo',
-                      style: TextStyle(
-                        fontSize: 10,
-                        fontWeight: FontWeight.w600,
-                        fontFamily: 'RobotoMono-Bold',
-                      ),
-                    ),
+                ),
+              ),
+            ),
+            Positioned(
+              bottom: MediaQuery.of(context).size.height * 0.04,
+              left: 130.0,
+              right: 130.0,
+              child: TextButton(
+                onPressed: () {
+                  Navigator.of(context).pop();
+                },
+                style: TextButton.styleFrom(
+                  minimumSize: const Size(0.0, 40.0),
+                  shape: RoundedRectangleBorder(
+                    borderRadius: BorderRadius.circular(7.0),
                   ),
-                ],
+                  side: BorderSide(
+                    color: Colors.white,
+                    width: 3.0,
+                  ),
+                  foregroundColor: Colors.white,
+                  backgroundColor: Color(0xff432818),
+                  padding: EdgeInsets.symmetric(horizontal: 10.0),
+                ),
+                child: Text(
+                  'Choose or take a new photo',
+                  style: TextStyle(
+                    fontSize: 10,
+                    fontWeight: FontWeight.w600,
+                    fontFamily: 'RobotoMono-Bold',
+                  ),
+                ),
               ),
             ),
           ],
