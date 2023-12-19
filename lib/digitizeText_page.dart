@@ -48,7 +48,7 @@ class _DigitizeTextPageState extends State<DigitizeTextPage> {
               ),
             ),
             Positioned(
-              bottom: MediaQuery.of(context).size.height * 0.123,
+              bottom: MediaQuery.of(context).size.height * 0.14,
               left: 0,
               right: 0,
               child: FractionallySizedBox(
@@ -87,8 +87,8 @@ class _DigitizeTextPageState extends State<DigitizeTextPage> {
             ),
             Positioned(
               bottom: MediaQuery.of(context).size.height * 0.04,
-              left: 130.0,
-              right: 130.0,
+              left: 110.0,
+              right: 110.0,
               child: TextButton(
                 onPressed: () {
                   Navigator.of(context).pop();
