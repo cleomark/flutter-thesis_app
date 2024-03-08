@@ -7,6 +7,7 @@ import 'package:provider/provider.dart';
 import 'image_provider.dart' as CustomImageProvider;
 import 'digitizeText_page.dart';
 import 'howItWorks_page.dart';
+import 'package:http/http.dart' as http;
 
 class UploadPage extends StatefulWidget {
   const UploadPage({super.key});
@@ -103,8 +104,8 @@ class _UploadPageState extends State<UploadPage> {
     );
 
     if (croppedImage != null) {
+      uploadFile(croppedImage);
       Future<Uint8List> bytes = croppedImage.readAsBytes();
-
       await bytes.then((Uint8List bytes) {
         Provider.of<CustomImageProvider.ImageProvider>(context, listen: false)
             .updateCroppedImage(bytes);
@@ -122,6 +123,25 @@ class _UploadPageState extends State<UploadPage> {
       // setState(() {
       //   _croppedImage = croppedImage;
       // });
+    }
+  }
+
+  void uploadFile(CroppedFile file) async {
+    var request = http.MultipartRequest(
+        'POST', Uri.parse('http://10.50.70.162:3000/icr'));
+
+    // Add file to the request
+    request.files.add(await http.MultipartFile.fromPath('file', file.path));
+
+    // Send the request
+    var response = await request.send();
+    // Check the server response
+    if (response.statusCode == 200) {
+      var recognizedText = await response.stream.bytesToString();
+      print(recognizedText);
+      print('File uploaded successfully');
+    } else {
+      print('Error uploading file: ${response.reasonPhrase}');
     }
   }
 
