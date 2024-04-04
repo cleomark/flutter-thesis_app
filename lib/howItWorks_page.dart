@@ -7,7 +7,16 @@ class HowItWorksPage extends StatelessWidget {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: const Text('How it Works'),
+        iconTheme: const IconThemeData(
+          color: Colors.white,
+        ),
+        title: const Text(
+          'How it Works',
+          style: TextStyle(
+            color: Colors.white,
+            fontFamily: 'RobotoMono',
+          ),
+        ),
         backgroundColor: const Color(0xff432818),
       ),
       body: Padding(
