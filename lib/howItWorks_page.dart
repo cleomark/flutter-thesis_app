@@ -30,7 +30,7 @@ class HowItWorksPage extends StatelessWidget {
             ),
             const SizedBox(height: 16),
             const Text(
-              'Our product or service is designed to help you [achieve a specific goal]. It works by [briefly describe the process].',
+              'Our app converts handwritten sentence images into digital text. It works by utilizing advanced machine learning algorithms to recognize the text from the images you provide.',
             ),
             const SizedBox(height: 16),
             const Text(
@@ -39,20 +39,23 @@ class HowItWorksPage extends StatelessWidget {
             ),
             const SizedBox(height: 16),
             const Text(
-              'There are a few key steps involved in using our product or service:',
+              'There are a few key steps involved in using our app:',
             ),
             const SizedBox(height: 8),
             ListTile(
-              title: const Text('Step 1'),
-              subtitle: const Text('[Briefly describe Step 1]'),
+              title: const Text('Step 1: Capture Image'),
+              subtitle: const Text(
+                  'Take a clear picture of the handwritten sentence you want to convert.'),
             ),
             ListTile(
-              title: const Text('Step 2'),
-              subtitle: const Text('[Briefly describe Step 2]'),
+              title: const Text('Step 2: Select Language'),
+              subtitle: const Text(
+                  'Choose the language of the handwritten text for accurate conversion.'),
             ),
             ListTile(
-              title: const Text('Step 3'),
-              subtitle: const Text('[Briefly describe Step 3]'),
+              title: const Text('Step 3: Convert to Text'),
+              subtitle: const Text(
+                  'Tap the "Convert" button to process the image and obtain the digital text.'),
             ),
           ],
         ),

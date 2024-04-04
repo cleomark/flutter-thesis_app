@@ -5,8 +5,10 @@ import 'image_provider.dart' as CustomImageProvider;
 import 'upload_page.dart';
 
 class ComparisonPage extends StatefulWidget {
-  const ComparisonPage({super.key});
+  final String combinedResult;
 
+  const ComparisonPage({Key? key, required this.combinedResult})
+      : super(key: key);
   @override
   State<ComparisonPage> createState() => _ComparisonPageState();
 }
@@ -76,9 +78,9 @@ class _ComparisonPageState extends State<ComparisonPage> {
       height: containerHeight,
       padding: const EdgeInsets.all(8.0),
       decoration: _boxDecoration(Colors.white),
-      child: const Center(
+      child: Center(
         child: Text(
-          'Translated Text Placeholder',
+          widget.combinedResult, // Use the value of combinedResult
           style: TextStyle(color: Colors.black54),
         ),
       ),

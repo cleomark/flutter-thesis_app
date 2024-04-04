@@ -3,48 +3,31 @@ import 'dart:typed_data';
 import 'package:image_picker/image_picker.dart';
 import 'package:image_cropper/image_cropper.dart';
 import 'package:provider/provider.dart';
-// import 'dart:io';
 import 'image_provider.dart' as CustomImageProvider;
 import 'digitizeText_page.dart';
 import 'howItWorks_page.dart';
 import 'package:http/http.dart' as http;
+import 'dart:convert';
 
 class UploadPage extends StatefulWidget {
-  const UploadPage({super.key});
+  const UploadPage({Key? key});
 
   @override
   State<UploadPage> createState() => _UploadPageState();
 }
 
 class _UploadPageState extends State<UploadPage> {
+  String combinedResult = '';
+
   Future<bool> _captureImage() async {
     final XFile? image =
         await ImagePicker().pickImage(source: ImageSource.camera);
 
     if (image != null) {
-      // Show a loading indicator while cropping
-      showDialog(
-        context: context,
-        barrierDismissible: false,
-        builder: (BuildContext context) {
-          return Center(
-            child: CircularProgressIndicator(
-              valueColor: AlwaysStoppedAnimation<Color>(
-                const Color(0xffffe6a7),
-              ),
-            ),
-          );
-        },
-      );
-
-      await _cropImage(XFile(image.path));
-
-      // Close the loading indicator
-      Navigator.pop(context);
-
-      return true; // Image captured successfully
+      await _cropAndUploadImage(XFile(image.path));
+      return true;
     }
-    return false; // No image captured
+    return false;
   }
 
   Future<bool> _pickImageFromGallery() async {
@@ -52,32 +35,13 @@ class _UploadPageState extends State<UploadPage> {
         await ImagePicker().pickImage(source: ImageSource.gallery);
 
     if (image != null) {
-      // Show a loading indicator while cropping
-      showDialog(
-        context: context,
-        barrierDismissible: false,
-        builder: (BuildContext context) {
-          return Center(
-            child: CircularProgressIndicator(
-              valueColor: AlwaysStoppedAnimation<Color>(
-                const Color(0xffffe6a7),
-              ),
-            ),
-          );
-        },
-      );
-
-      await _cropImage(XFile(image.path));
-
-      // Close the loading indicator
-      Navigator.pop(context);
-
+      await _cropAndUploadImage(XFile(image.path));
       return true;
     }
     return false;
   }
 
-  Future<void> _cropImage(XFile imageFile) async {
+  Future<void> _cropAndUploadImage(XFile imageFile) async {
     final croppedImage = await ImageCropper().cropImage(
       sourcePath: imageFile.path,
       aspectRatioPresets: [
@@ -104,7 +68,35 @@ class _UploadPageState extends State<UploadPage> {
     );
 
     if (croppedImage != null) {
-      uploadFile(croppedImage);
+      showDialog(
+        context: context,
+        barrierDismissible: false,
+        builder: (BuildContext context) {
+          return Center(
+            child: CircularProgressIndicator(
+              valueColor: AlwaysStoppedAnimation<Color>(
+                const Color(0xffffe6a7),
+              ),
+            ),
+          );
+        },
+      );
+
+      await uploadFile(croppedImage);
+
+      Navigator.pop(context);
+
+      if (combinedResult.isNotEmpty) {
+        Navigator.of(context).push(
+          MaterialPageRoute(
+            builder: (BuildContext context) => DigitizeTextPage(
+              combinedResult: combinedResult,
+            ),
+          ),
+        );
+      } else {
+        // Handle the case where combinedResult is empty
+      }
       Future<Uint8List> bytes = croppedImage.readAsBytes();
       await bytes.then((Uint8List bytes) {
         Provider.of<CustomImageProvider.ImageProvider>(context, listen: false)
@@ -126,20 +118,25 @@ class _UploadPageState extends State<UploadPage> {
     }
   }
 
-  void uploadFile(CroppedFile file) async {
-    var request = http.MultipartRequest(
-        'POST', Uri.parse('http://10.50.70.162:3000/icr'));
+  Future<void> uploadFile(CroppedFile file) async {
+    var request =
+        http.MultipartRequest('POST', Uri.parse('http://192.168.110.160:5000'));
 
-    // Add file to the request
     request.files.add(await http.MultipartFile.fromPath('file', file.path));
 
-    // Send the request
     var response = await request.send();
-    // Check the server response
+
     if (response.statusCode == 200) {
-      var recognizedText = await response.stream.bytesToString();
-      print(recognizedText);
-      print('File uploaded successfully');
+      var responseText = await response.stream.bytesToString();
+      var responseBody = json.decode(responseText);
+      if (responseBody.containsKey('result')) {
+        var result = List<String>.from(responseBody['result']);
+        combinedResult = result.isNotEmpty ? result.join(' ') : '';
+        print('Recognized text: $combinedResult');
+        print('File uploaded successfully');
+      } else {
+        print('No result found in response');
+      }
     } else {
       print('Error uploading file: ${response.reasonPhrase}');
     }
@@ -234,20 +231,14 @@ class _UploadPageState extends State<UploadPage> {
                       ),
                       onPressed: () async {
                         bool imageCaptured = await _captureImage();
-                        if (imageCaptured) {
-                          Navigator.of(context).push(
-                            MaterialPageRoute(
-                              builder: (BuildContext context) =>
-                                  const DigitizeTextPage(),
-                            ),
-                          );
+                        if (!imageCaptured) {
+                          // Handle case where image capture failed
                         }
                       },
                       child: Row(
                         mainAxisAlignment: MainAxisAlignment.center,
                         crossAxisAlignment: CrossAxisAlignment.center,
                         children: [
-                          // SizedBox(width: 5),
                           Image.asset(
                             'assets/images/camera-icon.png',
                             height: 26,
@@ -336,20 +327,14 @@ class _UploadPageState extends State<UploadPage> {
                       ),
                       onPressed: () async {
                         bool imageCaptured = await _pickImageFromGallery();
-                        if (imageCaptured) {
-                          Navigator.of(context).push(
-                            MaterialPageRoute(
-                              builder: (BuildContext context) =>
-                                  const DigitizeTextPage(),
-                            ),
-                          );
+                        if (!imageCaptured) {
+                          // Handle case where image selection failed
                         }
                       },
                       child: Row(
                         mainAxisAlignment: MainAxisAlignment.center,
                         crossAxisAlignment: CrossAxisAlignment.center,
                         children: [
-                          // SizedBox(width: 5),
                           Image.asset(
                             'assets/images/gallery-icon.png',
                             height: 30,
@@ -384,8 +369,8 @@ class _UploadPageState extends State<UploadPage> {
                   );
                 },
                 child: Text(
-                  textAlign: TextAlign.center,
                   'How it works?',
+                  textAlign: TextAlign.center,
                   style: TextStyle(
                     color: const Color(0xff808080).withOpacity(0.7),
                     fontSize: 12,
