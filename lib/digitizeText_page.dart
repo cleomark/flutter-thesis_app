@@ -84,7 +84,7 @@ class _DigitizeTextPageState extends State<DigitizeTextPage> {
                   child: const Text(
                     'COMPARE',
                     style: TextStyle(
-                      fontSize: 20,
+                      fontSize: 24,
                       fontWeight: FontWeight.w600,
                       fontFamily: 'RobotoMono-Bold',
                     ),
