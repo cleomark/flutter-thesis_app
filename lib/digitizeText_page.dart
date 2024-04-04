@@ -30,8 +30,7 @@ class _DigitizeTextPageState extends State<DigitizeTextPage> {
         ),
         child: Stack(
           children: [
-            _buildTextContainer(context),
-            _buildCompareButton(context),
+            _buildTextContainerWithCompareButton(context),
             _buildBottomTextButton(context),
           ],
         ),
@@ -39,7 +38,7 @@ class _DigitizeTextPageState extends State<DigitizeTextPage> {
     );
   }
 
-  Widget _buildTextContainer(BuildContext context) {
+  Widget _buildTextContainerWithCompareButton(BuildContext context) {
     return Positioned(
       top: 20.0,
       left: 20.0,
@@ -51,50 +50,109 @@ class _DigitizeTextPageState extends State<DigitizeTextPage> {
           border: Border.all(color: borderColor, width: 2.0),
           borderRadius: BorderRadius.circular(10),
         ),
-        child: const Padding(
-          padding: EdgeInsets.all(16.0),
-          child: Text("Converted Text from the Model..."),
-        ),
-      ),
-    );
-  }
-
-  Widget _buildCompareButton(BuildContext context) {
-    return Positioned(
-      bottom: MediaQuery.of(context).size.height * 0.125,
-      left: 20.0,
-      right: 20.0,
-      child: FractionallySizedBox(
-        widthFactor: 0.5,
-        child: ElevatedButton(
-          onPressed: () {
-            Navigator.of(context).push(
-              MaterialPageRoute(
-                builder: (BuildContext context) => const ComparisonPage(),
+        child: Stack(
+          clipBehavior: Clip.none,
+          children: [
+            const Padding(
+              padding: EdgeInsets.all(16.0),
+              child: Text("Converted Text from the Model..."),
+            ),
+            Positioned(
+              bottom: -30,
+              left: 50,
+              right: 50,
+              child: Center(
+                child: ElevatedButton(
+                  onPressed: () {
+                    Navigator.of(context).push(
+                      MaterialPageRoute(
+                        builder: (BuildContext context) =>
+                            const ComparisonPage(),
+                      ),
+                    );
+                  },
+                  style: ElevatedButton.styleFrom(
+                    minimumSize:
+                        const Size(double.infinity, 60.0), // Full width
+                    shape: RoundedRectangleBorder(
+                      borderRadius: BorderRadius.circular(30.0),
+                    ),
+                    side: const BorderSide(color: Colors.white, width: 3.0),
+                    foregroundColor: primaryColor,
+                    backgroundColor: secondaryColor,
+                  ),
+                  child: const Text(
+                    'COMPARE',
+                    style: TextStyle(
+                      fontSize: 20,
+                      fontWeight: FontWeight.w600,
+                      fontFamily: 'RobotoMono-Bold',
+                    ),
+                  ),
+                ),
               ),
-            );
-          },
-          style: ElevatedButton.styleFrom(
-            minimumSize: const Size(double.infinity, 60.0), // Full width
-            shape: RoundedRectangleBorder(
-              borderRadius: BorderRadius.circular(30.0),
             ),
-            side: const BorderSide(color: Colors.white, width: 3.0),
-            foregroundColor: primaryColor,
-            backgroundColor: secondaryColor,
-          ),
-          child: const Text(
-            'COMPARE',
-            style: TextStyle(
-              fontSize: 20,
-              fontWeight: FontWeight.w600,
-              fontFamily: 'RobotoMono-Bold',
-            ),
-          ),
+          ],
         ),
       ),
     );
   }
+  // Widget _buildTextContainer(BuildContext context) {
+  //   return Positioned(
+  //     top: 20.0,
+  //     left: 20.0,
+  //     right: 20.0,
+  //     child: Container(
+  //       height: MediaQuery.of(context).size.height * 0.7,
+  //       decoration: BoxDecoration(
+  //         color: Colors.white,
+  //         border: Border.all(color: borderColor, width: 2.0),
+  //         borderRadius: BorderRadius.circular(10),
+  //       ),
+  //       child: const Padding(
+  //         padding: EdgeInsets.all(16.0),
+  //         child: Text("Converted Text from the Model..."),
+  //       ),
+  //     ),
+  //   );
+  // }
+
+  // Widget _buildCompareButton(BuildContext context) {
+  //   return Positioned(
+  //     bottom: MediaQuery.of(context).size.height * 0.125,
+  //     left: 20.0,
+  //     right: 20.0,
+  //     child: FractionallySizedBox(
+  //       widthFactor: 0.5,
+  //       child: ElevatedButton(
+  //         onPressed: () {
+  //           Navigator.of(context).push(
+  //             MaterialPageRoute(
+  //               builder: (BuildContext context) => const ComparisonPage(),
+  //             ),
+  //           );
+  //         },
+  //         style: ElevatedButton.styleFrom(
+  //           minimumSize: const Size(double.infinity, 60.0), // Full width
+  //           shape: RoundedRectangleBorder(
+  //             borderRadius: BorderRadius.circular(30.0),
+  //           ),
+  //           side: const BorderSide(color: Colors.white, width: 3.0),
+  //           foregroundColor: primaryColor,
+  //           backgroundColor: secondaryColor,
+  //         ),
+  //         child: const Text(
+  //           'COMPARE',
+  //           style: TextStyle(
+  //             fontSize: 20,
+  //             fontWeight: FontWeight.w600,
+  //             fontFamily: 'RobotoMono-Bold',
+  //           ),
+  //         ),
+  //       ),
+  //     ),
+  //   );
+  // }
 
   Widget _buildBottomTextButton(BuildContext context) {
     return Positioned(
