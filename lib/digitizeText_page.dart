@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'comparison_page.dart';
+import 'package:flutter/services.dart';
 
 class DigitizeTextPage extends StatefulWidget {
   final String combinedResult;
@@ -16,6 +17,14 @@ class _DigitizeTextPageState extends State<DigitizeTextPage> {
   static const Color secondaryColor = Color(0xffffe6a7);
   static const Color borderColor = Color(0xff432818);
   static const Color backgroundColor = Color.fromARGB(255, 241, 241, 241);
+
+  void _copyToClipboard(String text) {
+    Clipboard.setData(ClipboardData(text: text));
+    // Show a SnackBar or any other feedback to indicate that the text has been copied.
+    ScaffoldMessenger.of(context).showSnackBar(
+      const SnackBar(content: Text('Text copied to clipboard')),
+    );
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -64,9 +73,23 @@ class _DigitizeTextPageState extends State<DigitizeTextPage> {
                   SizedBox(height: 10),
                   Text(
                     widget.combinedResult, // Use the value of combinedResult
-                    style: TextStyle(fontSize: 16),
+                    style: TextStyle(fontSize: 24), // Adjust font size here
                   ),
                 ],
+              ),
+            ),
+            Positioned(
+              top: 0,
+              right: 0,
+              child: IconButton(
+                onPressed: () {
+                  _copyToClipboard(widget.combinedResult);
+                },
+                icon: Icon(
+                  Icons.copy,
+                  color: Colors.brown, // Brown color
+                ),
+                tooltip: 'Copy',
               ),
             ),
             Positioned(

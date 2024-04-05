@@ -2,7 +2,6 @@ import 'package:flutter/material.dart';
 
 class HowItWorksPage extends StatelessWidget {
   const HowItWorksPage({super.key});
-
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -30,7 +29,7 @@ class HowItWorksPage extends StatelessWidget {
             ),
             const SizedBox(height: 16),
             const Text(
-              'Our app converts handwritten sentence images into digital text. It works by utilizing advanced machine learning algorithms to recognize the text from the images you provide.',
+              'Our app converts handwritten sentence images into digital text. It works by utilizing advanced machine learning algorithms to recognize the text from the images you provide. We employ a combination of ResNet architecture for image feature extraction and Conv1D layers for text recognition to achieve high accuracy and robustness.',
             ),
             const SizedBox(height: 16),
             const Text(
@@ -43,19 +42,24 @@ class HowItWorksPage extends StatelessWidget {
             ),
             const SizedBox(height: 8),
             ListTile(
-              title: const Text('Step 1: Capture Image'),
+              title: const Text('Step 1: Capture or Upload Image'),
               subtitle: const Text(
-                  'Take a clear picture of the handwritten sentence you want to convert.'),
+                  'Take a clear picture of the handwritten sentence you want to convert or upload an image from your device.'),
             ),
             ListTile(
-              title: const Text('Step 2: Select Language'),
+              title: const Text('Step 2: Convert Image to Text'),
               subtitle: const Text(
-                  'Choose the language of the handwritten text for accurate conversion.'),
+                  'Process the captured/uploaded image to extract text using machine learning algorithms.'),
             ),
             ListTile(
-              title: const Text('Step 3: Convert to Text'),
+              title: const Text('Step 3: Compare Image with Text'),
               subtitle: const Text(
-                  'Tap the "Convert" button to process the image and obtain the digital text.'),
+                  'Compare the original image with the extracted text to ensure accuracy.'),
+            ),
+            ListTile(
+              title: const Text('Step 4: Copy Converted Text'),
+              subtitle: const Text(
+                  'If the extracted text matches the content of the image, copy the text for further use.'),
             ),
           ],
         ),

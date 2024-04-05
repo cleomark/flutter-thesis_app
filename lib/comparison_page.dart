@@ -3,6 +3,7 @@ import 'dart:typed_data';
 import 'package:provider/provider.dart';
 import 'image_provider.dart' as CustomImageProvider;
 import 'upload_page.dart';
+import 'package:flutter/services.dart';
 
 class ComparisonPage extends StatefulWidget {
   final String combinedResult;
@@ -78,12 +79,48 @@ class _ComparisonPageState extends State<ComparisonPage> {
       height: containerHeight,
       padding: const EdgeInsets.all(8.0),
       decoration: _boxDecoration(Colors.white),
-      child: Center(
-        child: Text(
-          widget.combinedResult, // Use the value of combinedResult
-          style: TextStyle(color: Colors.black54),
-        ),
+      child: Stack(
+        children: [
+          Positioned(
+            top: 0,
+            right: 0,
+            child: IconButton(
+              onPressed: () {
+                _copyToClipboard(widget.combinedResult);
+              },
+              icon: Icon(
+                Icons.copy,
+                color: Colors.brown, // Brown color
+              ),
+              tooltip: 'Copy',
+            ),
+          ),
+          Column(
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: [
+              SizedBox(height: 40), // Adjust height as needed
+              Padding(
+                padding: const EdgeInsets.only(
+                    left: 8.0), // Adjust padding as needed
+                child: Text(
+                  widget.combinedResult, // Use the value of combinedResult
+                  style: TextStyle(
+                      color: Colors.black54,
+                      fontSize: 24), // Adjust font size here
+                ),
+              ),
+            ],
+          ),
+        ],
       ),
+    );
+  }
+
+  void _copyToClipboard(String text) {
+    Clipboard.setData(ClipboardData(text: text));
+    // Show a SnackBar or any other feedback to indicate that the text has been copied.
+    ScaffoldMessenger.of(context).showSnackBar(
+      const SnackBar(content: Text('Text copied to clipboard')),
     );
   }
 
