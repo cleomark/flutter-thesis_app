@@ -120,7 +120,7 @@ class _UploadPageState extends State<UploadPage> {
 
   Future<void> uploadFile(CroppedFile file) async {
     var request =
-        http.MultipartRequest('POST', Uri.parse('http://10.10.62.183:5000'));
+        http.MultipartRequest('POST', Uri.parse('http://10.10.18.174:5000'));
 
     request.files.add(await http.MultipartFile.fromPath('file', file.path));
 
